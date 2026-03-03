@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siding Quote Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Siding Quote Generator</h1>
+  </header>
+
+  <main>
+    <!-- Settings Panel -->
+    <section id="settings-panel" class="panel">
+      <button class="panel-toggle" id="settings-toggle">
+        <span class="toggle-icon">&#9660;</span> Settings &amp; Rates
+      </button>
+      <div class="panel-content" id="settings-content">
+
+        <!-- Materials Configuration -->
+        <div class="settings-section">
+          <h3>Siding Materials</h3>
+          <p class="hint">Add the materials you work with and their rates per square foot.</p>
+          <div id="materials-list"></div>
+          <form id="add-material-form" class="inline-form">
+            <input type="text" id="mat-name" placeholder="Material name" required>
+            <input type="number" id="mat-cost" placeholder="Material $/sqft" step="0.01" min="0" required>
+            <input type="number" id="mat-labor" placeholder="Labor $/sqft" step="0.01" min="0" required>
+            <button type="submit" class="btn btn-add">+ Add Material</button>
+          </form>
+        </div>
+
+        <!-- Extras Configuration -->
+        <div class="settings-section">
+          <h3>Extras Rates</h3>
+          <p class="hint">Set material and labor costs for each extra line item.</p>
+          <table class="extras-config-table">
+            <thead>
+              <tr>
+                <th>Extra</th>
+                <th>Unit</th>
+                <th>Material Cost</th>
+                <th>Labor Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Windows</td>
+                <td>per unit</td>
+                <td><input type="number" data-extra="windows" data-field="material" step="0.01" min="0" placeholder="0.00"></td>
+                <td><input type="number" data-extra="windows" data-field="labor" step="0.01" min="0" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td>Doors</td>
+                <td>per unit</td>
+                <td><input type="number" data-extra="doors" data-field="material" step="0.01" min="0" placeholder="0.00"></td>
+                <td><input type="number" data-extra="doors" data-field="labor" step="0.01" min="0" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td>Trim</td>
+                <td>per linear ft</td>
+                <td><input type="number" data-extra="trim" data-field="material" step="0.01" min="0" placeholder="0.00"></td>
+                <td><input type="number" data-extra="trim" data-field="labor" step="0.01" min="0" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td>Outside Corners</td>
+                <td>per linear ft</td>
+                <td><input type="number" data-extra="outsideCorners" data-field="material" step="0.01" min="0" placeholder="0.00"></td>
+                <td><input type="number" data-extra="outsideCorners" data-field="labor" step="0.01" min="0" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td>Inside Corners</td>
+                <td>per linear ft</td>
+                <td><input type="number" data-extra="insideCorners" data-field="material" step="0.01" min="0" placeholder="0.00"></td>
+                <td><input type="number" data-extra="insideCorners" data-field="labor" step="0.01" min="0" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td>J-Channel</td>
+                <td>per linear ft</td>
+                <td><input type="number" data-extra="jChannel" data-field="material" step="0.01" min="0" placeholder="0.00"></td>
+                <td><input type="number" data-extra="jChannel" data-field="labor" step="0.01" min="0" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td>Soffits</td>
+                <td>per sq ft</td>
+                <td><input type="number" data-extra="soffits" data-field="material" step="0.01" min="0" placeholder="0.00"></td>
+                <td><input type="number" data-extra="soffits" data-field="labor" step="0.01" min="0" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td>Fascia</td>
+                <td>per linear ft</td>
+                <td><input type="number" data-extra="fascia" data-field="material" step="0.01" min="0" placeholder="0.00"></td>
+                <td><input type="number" data-extra="fascia" data-field="labor" step="0.01" min="0" placeholder="0.00"></td>
+              </tr>
+              <tr>
+                <td>Tear-off / Removal</td>
+                <td>per sq ft</td>
+                <td><input type="number" data-extra="tearoff" data-field="material" step="0.01" min="0" placeholder="0.00"></td>
+                <td><input type="number" data-extra="tearoff" data-field="labor" step="0.01" min="0" placeholder="0.00"></td>
+              </tr>
+            </tbody>
+          </table>
+          <button id="save-extras" class="btn btn-save">Save Extras Rates</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote Input -->
+    <section id="quote-input" class="panel">
+      <h2>New Quote</h2>
+
+      <div class="form-row">
+        <label for="customer-name">Customer Name <span class="optional">(optional)</span></label>
+        <input type="text" id="customer-name" placeholder="e.g., John Smith">
+      </div>
+
+      <!-- Job Sections -->
+      <div class="form-row">
+        <label>Siding Sections</label>
+        <p class="hint">Add one section for the whole house, or multiple sections for a partial job.</p>
+      </div>
+      <div id="sections-container"></div>
+      <button id="add-section" class="btn btn-add">+ Add Section</button>
+
+      <!-- Extras -->
+      <div class="extras-inputs">
+        <h3>Extras</h3>
+        <div class="extras-grid">
+          <div class="form-row">
+            <label for="extra-windows">Windows</label>
+            <input type="number" id="extra-windows" min="0" value="0" data-extra-input="windows">
+            <span class="unit">units</span>
+          </div>
+          <div class="form-row">
+            <label for="extra-doors">Doors</label>
+            <input type="number" id="extra-doors" min="0" value="0" data-extra-input="doors">
+            <span class="unit">units</span>
+          </div>
+          <div class="form-row">
+            <label for="extra-trim">Trim</label>
+            <input type="number" id="extra-trim" min="0" value="0" step="0.1" data-extra-input="trim">
+            <span class="unit">linear ft</span>
+          </div>
+          <div class="form-row">
+            <label for="extra-outside-corners">Outside Corners</label>
+            <input type="number" id="extra-outside-corners" min="0" value="0" step="0.1" data-extra-input="outsideCorners">
+            <span class="unit">linear ft</span>
+          </div>
+          <div class="form-row">
+            <label for="extra-inside-corners">Inside Corners</label>
+            <input type="number" id="extra-inside-corners" min="0" value="0" step="0.1" data-extra-input="insideCorners">
+            <span class="unit">linear ft</span>
+          </div>
+          <div class="form-row">
+            <label for="extra-j-channel">J-Channel</label>
+            <input type="number" id="extra-j-channel" min="0" value="0" step="0.1" data-extra-input="jChannel">
+            <span class="unit">linear ft</span>
+          </div>
+          <div class="form-row">
+            <label for="extra-soffits">Soffits</label>
+            <input type="number" id="extra-soffits" min="0" value="0" step="0.1" data-extra-input="soffits">
+            <span class="unit">sq ft</span>
+          </div>
+          <div class="form-row">
+            <label for="extra-fascia">Fascia</label>
+            <input type="number" id="extra-fascia" min="0" value="0" step="0.1" data-extra-input="fascia">
+            <span class="unit">linear ft</span>
+          </div>
+          <div class="form-row tearoff-row">
+            <label>
+              <input type="checkbox" id="tearoff-enabled"> Tear-off / Removal
+            </label>
+            <input type="number" id="extra-tearoff" min="0" value="0" step="0.1" data-extra-input="tearoff" disabled>
+            <span class="unit">sq ft</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profit Margin -->
+      <div class="margin-row">
+        <label for="profit-margin">Target Profit Margin</label>
+        <div class="margin-input-wrap">
+          <input type="number" id="profit-margin" min="0" max="99" value="30" step="1">
+          <span class="unit">%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote Output -->
+    <section id="quote-output" class="panel">
+      <h2>Quote Summary</h2>
+      <div id="customer-display" class="customer-display"></div>
+      <table id="summary-table">
+        <thead>
+          <tr>
+            <th>Line Item</th>
+            <th class="col-material">Material</th>
+            <th class="col-labor">Labor</th>
+            <th class="col-total">Total</th>
+          </tr>
+        </thead>
+        <tbody id="summary-body"></tbody>
+        <tfoot id="summary-foot"></tfoot>
+      </table>
+      <div class="quote-actions no-print">
+        <button id="clear-quote" class="btn btn-clear">Clear Quote</button>
+        <button id="print-quote" class="btn btn-print">Print Quote</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

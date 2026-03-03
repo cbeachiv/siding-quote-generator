@@ -1,0 +1,592 @@
+/* === Reset & Base === */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  line-height: 1.5;
+  padding: 1rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+header h1 {
+  font-size: 1.75rem;
+  color: var(--gray-900);
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* === Panels === */
+.panel {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+.panel h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--gray-900);
+}
+
+.panel h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--gray-700);
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--gray-400);
+  margin-bottom: 0.75rem;
+}
+
+.optional {
+  font-size: 0.8rem;
+  color: var(--gray-400);
+  font-weight: normal;
+}
+
+/* === Settings Toggle === */
+.panel-toggle {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--gray-700);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+}
+
+.panel-toggle:hover {
+  color: var(--primary);
+}
+
+.toggle-icon {
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+}
+
+.panel-toggle.collapsed .toggle-icon {
+  transform: rotate(-90deg);
+}
+
+.panel-content {
+  margin-top: 1rem;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.panel-content.hidden {
+  display: none;
+}
+
+.settings-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* === Materials List === */
+#materials-list {
+  margin-bottom: 0.75rem;
+}
+
+.material-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  margin-bottom: 0.5rem;
+}
+
+.material-item .mat-label {
+  flex: 1;
+  font-weight: 500;
+}
+
+.material-item .mat-info {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+}
+
+.material-item .btn-remove {
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0 0.25rem;
+  line-height: 1;
+}
+
+.material-item .btn-remove:hover {
+  color: #b91c1c;
+}
+
+/* === Inline Form (Add Material) === */
+.inline-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.inline-form input {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* === Extras Config Table === */
+.extras-config-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.75rem;
+}
+
+.extras-config-table th {
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-400);
+  padding: 0.5rem;
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.extras-config-table td {
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 0.9rem;
+}
+
+.extras-config-table input {
+  width: 100%;
+  max-width: 120px;
+}
+
+/* === Form Inputs === */
+input[type="text"],
+input[type="number"],
+select {
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--gray-800);
+  background: #fff;
+  transition: border-color 0.15s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+/* === Buttons === */
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-add {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-add:hover {
+  background: var(--primary-dark);
+}
+
+.btn-save {
+  background: var(--success);
+  color: #fff;
+}
+
+.btn-save:hover {
+  background: #15803d;
+}
+
+.btn-clear {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.btn-clear:hover {
+  background: var(--gray-300);
+}
+
+.btn-print {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-print:hover {
+  background: var(--primary-dark);
+}
+
+/* === Quote Input: Form Rows === */
+.form-row {
+  margin-bottom: 0.75rem;
+}
+
+.form-row label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.form-row input[type="text"],
+.form-row input[type="number"] {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* === Sections === */
+#sections-container {
+  margin-bottom: 0.75rem;
+}
+
+.section-card {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.section-card .section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.section-card .section-header input[type="text"] {
+  flex: 1;
+}
+
+.section-card .section-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.section-card .section-fields label {
+  font-size: 0.85rem;
+}
+
+.section-card .section-fields input,
+.section-card .section-fields select {
+  width: 100%;
+}
+
+.section-card .btn-remove-section {
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0 0.25rem;
+  line-height: 1;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+}
+
+.section-card .btn-remove-section:hover {
+  color: #b91c1c;
+}
+
+/* === Extras Grid === */
+.extras-inputs {
+  margin-top: 1.25rem;
+}
+
+.extras-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1.5rem;
+}
+
+.extras-grid .form-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0;
+}
+
+.extras-grid .form-row label {
+  min-width: 120px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.extras-grid .form-row input[type="number"] {
+  width: 80px;
+  max-width: 80px;
+  text-align: right;
+}
+
+.extras-grid .form-row .unit {
+  font-size: 0.8rem;
+  color: var(--gray-400);
+  white-space: nowrap;
+}
+
+.tearoff-row input[type="number"]:disabled {
+  opacity: 0.4;
+}
+
+/* === Margin Row === */
+.margin-row {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.margin-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.margin-input-wrap input {
+  width: 80px;
+  text-align: right;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.margin-input-wrap .unit {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gray-600);
+}
+
+/* === Quote Summary Table === */
+.customer-display {
+  font-size: 1rem;
+  color: var(--gray-600);
+  margin-bottom: 0.75rem;
+}
+
+#summary-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#summary-table th {
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-400);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--gray-200);
+}
+
+#summary-table th.col-material,
+#summary-table th.col-labor,
+#summary-table th.col-total {
+  text-align: right;
+}
+
+#summary-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 0.9rem;
+}
+
+#summary-table td.amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#summary-table tr.subtotal td {
+  border-top: 2px solid var(--gray-200);
+  font-weight: 600;
+}
+
+#summary-table tr.grand-total td {
+  border-top: 3px double var(--gray-300);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  padding-top: 0.75rem;
+}
+
+#summary-table tr.margin-row-display td {
+  color: var(--success);
+  font-weight: 500;
+}
+
+#summary-table tfoot td {
+  padding: 0.5rem 0.75rem;
+}
+
+.empty-summary {
+  color: var(--gray-400);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.95rem;
+}
+
+/* === Quote Actions === */
+.quote-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+/* === Responsive === */
+@media (max-width: 640px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.35rem;
+  }
+
+  .panel {
+    padding: 1rem;
+  }
+
+  .inline-form {
+    flex-direction: column;
+  }
+
+  .inline-form input {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .section-card .section-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .extras-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .extras-config-table th:first-child,
+  .extras-config-table td:first-child {
+    font-size: 0.8rem;
+  }
+
+  .extras-grid .form-row label {
+    min-width: 100px;
+  }
+}
+
+/* === Print Styles === */
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+    font-size: 12pt;
+  }
+
+  .no-print,
+  #settings-panel,
+  #quote-input {
+    display: none !important;
+  }
+
+  .panel {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+
+  header h1 {
+    font-size: 18pt;
+    margin-bottom: 0.5rem;
+  }
+
+  #quote-output {
+    border: none;
+  }
+
+  #summary-table {
+    font-size: 11pt;
+  }
+
+  #summary-table th,
+  #summary-table td {
+    padding: 4px 8px;
+  }
+}
